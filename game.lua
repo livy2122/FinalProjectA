@@ -1,0 +1,94 @@
+local composer = require( "composer" )
+ 
+local scene = composer.newScene()
+ 
+-- -----------------------------------------------------------------------------------
+-- Code outside of the scene event functions below will only be executed ONCE unless
+-- the scene is removed entirely (not recycled) via "composer.removeScene()"
+-- -----------------------------------------------------------------------------------
+  local function menu ()
+     local options = {
+           effect = "fade",
+           time = 500
+  }         
+   composer.gotoScene( "menu", options)
+ end
+ 
+ 
+ 
+-- -----------------------------------------------------------------------------------
+-- Scene event functions
+-- -----------------------------------------------------------------------------------
+ 
+-- create()
+function scene:create( event )
+ 
+    local sceneGroup = self.view
+    -- Code here runs when the scene is first created but has not yet appeared on screen
+ 
+end
+ 
+
+
+-- show()
+function scene:show( event )
+ 
+    local sceneGroup = self.view
+    local phase = event.phase
+    
+    if ( phase == "will" ) then
+        
+      local map = display.newImageRect( "blackplay.jpg", 1900,2000 )
+        map.x = 800
+        map.y = display.contentHeight - 1050
+        map:toBack()
+               
+        
+      local MyText = display.newText( "ploop", 380, 640, native.systemFont, 48)
+      MyText:setFillColor(1, 1, 1)
+
+      sceneGroup:insert(MyText)
+       MyText:toFront()
+ 
+    elseif ( phase == "did" ) then
+        -- Code here runs when the scene is entirely on screen
+          timer.performWithDelay(3000, menu)
+    end
+end
+ 
+ 
+-- hide()
+function scene:hide( event )
+ 
+    local sceneGroup = self.view
+    local phase = event.phase
+ 
+    if ( phase == "will" ) then
+        -- Code here runs when the scene is on screen (but is about to go off screen)
+ 
+    elseif ( phase == "did" ) then
+        -- Code here runs immediately after the scene goes entirely off screen
+           
+    end
+end
+ 
+ 
+-- destroy()
+function scene:destroy( event )
+ 
+    local sceneGroup = self.view
+    -- Code here runs prior to the removal of scene's view
+ 
+end
+ 
+ 
+-- -----------------------------------------------------------------------------------
+-- Scene event function listeners
+-- -----------------------------------------------------------------------------------
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
+-- -----------------------------------------------------------------------------------
+ 
+return scene
